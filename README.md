@@ -1,4 +1,4 @@
-#Timesheet application
+# Timesheet application
 
 Well, as a self-employed IT guy :) I was creating my weekly, or monthly timesheets in Excel, exported them to PDF and sent them to my customers for signing and invoicing references.
 In my 'journey' as a full-stack developer this is the perfect exercise to make it a lot easier for myself.
