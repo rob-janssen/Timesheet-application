@@ -4,4 +4,4 @@ Well, as a self-employed IT guy :) I was creating my weekly, or monthly timeshee
 In my 'journey' as a full-stack developer this is the perfect exercise to make it a lot easier for myself.
 
 The frontend is a React/Typescript app.
-The backend is a Typescript backend API based on GraphQL.
+The backend is a Typescript backend API based on GraphQL with a MongoDB database.
