@@ -30,9 +30,9 @@ export const TimesheetResolver = {
         if (!timesheet)
           throw new Error(`Timesheet with ID ${args.id} not found.`);
         return {
-          succes: true,
+          success: true,
           timesheet,
-        };
+        }
       } catch (e) {
         throw e;
       }

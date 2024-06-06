@@ -1,9 +1,17 @@
 import mongoose  from 'mongoose'
+import { Schema, Model, model, Document } from "mongoose";
 
-const TimesheetCompanySchema = new mongoose.Schema({
+export interface ITimesheetCompany extends Document {
+  name: string;
+  users: [string]
+  customers: [string]
+}
+
+export const TimesheetCompanySchema = new mongoose.Schema({
   name: { type: String, required: true },
   users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  customers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Customer" }],
+  // customers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Customer" }],
+  customers: [{ type: String }],
 }, { timestamps: true });
 
-module.exports = mongoose.model('TimeSheetCompany', TimesheetCompanySchema)
+export const TimesheetCompany: Model<ITimesheetCompany> = model<ITimesheetCompany>("TimesheetCompany", TimesheetCompanySchema)

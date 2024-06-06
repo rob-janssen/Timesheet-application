@@ -23,7 +23,7 @@ export const timesheetsGQLSchema = buildSchema(`
 
     type Query {
         timesheets: timesheetsInfoResponse!
-        timesheet(id: String!): Timesheet!
+        timesheet(id: String!): timesheetResponse
     }
 
     type Mutation {
@@ -52,5 +52,9 @@ export const timesheetsGQLSchema = buildSchema(`
         success: Boolean!
         total: Int!
         timesheets: [Timesheet!]!
+    }
+    type timesheetResponse {
+        success: Boolean!
+        timesheet: Timesheet!
     }
 `);
