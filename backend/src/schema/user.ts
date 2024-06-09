@@ -1,12 +1,12 @@
 import { buildSchema } from "graphql";
 
 export const userGQLSchema = buildSchema(`
-
     type User {
         name: String!
         email: String!
         password: String!
         company: String!
+        customers: [String!]
     }
 
     type Query {
@@ -15,7 +15,8 @@ export const userGQLSchema = buildSchema(`
     }
 
     type Mutation {
-        addUser(name: String!, email: String!, password: String!, company: String!): createResponse
+        addUser(name: String!, email: String!, password: String!, company: String!, customers: [String!]): createResponse
+        addCustomerToUser(userId: String!, customers: [String!]): addCustomerResponse
     }
 
     type createResponse {
@@ -43,6 +44,11 @@ export const userGQLSchema = buildSchema(`
     }
     type userResponse {
         success: Boolean!
+        user: User!
+    }
+    type addCustomerResponse {
+        success: Boolean!
+        message: String!
         user: User!
     }
 `);

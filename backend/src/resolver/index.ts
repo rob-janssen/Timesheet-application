@@ -1,5 +1,5 @@
 import { TimesheetResolver } from "../resolver/timesheets";
 import { UserResolver } from "./user";
-import { timesheetCompanyResolver } from "../resolver/timesheetCompany";
+import { CustomerResolver } from "./customer";
 
-export const resolvers = [TimesheetResolver, UserResolver, timesheetCompanyResolver];
+export const resolvers = [TimesheetResolver, UserResolver, CustomerResolver];

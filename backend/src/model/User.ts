@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { Schema, Model, model, Document } from "mongoose";
 
-
 export interface IUser extends Document {
   name: string;
   email: string;
@@ -15,8 +14,9 @@ export const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     company: { type: String, required: true },
-    //TODO: onderstaande regel gebruiken
 
+    //TODO: onderstaande regel gebruiken
+    customers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Customer" }],
     // company: { type: mongoose.Schema.Types.ObjectId, ref: 'TimesheetCompany'}
   },
   { timestamps: true }
