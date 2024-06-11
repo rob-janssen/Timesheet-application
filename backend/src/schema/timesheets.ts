@@ -22,8 +22,8 @@ export const timesheetsGQLSchema = buildSchema(`
     }
 
     type Query {
-        timesheets: timesheetsInfoResponse!
-        timesheet(id: String!): timesheetResponse
+        timesheets(user: String!): timesheetsInfoResponse!
+        timesheet(id: String!, userId: String!): timesheetResponse
     }
 
     type Mutation {

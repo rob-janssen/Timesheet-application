@@ -11,10 +11,11 @@ interface Args {
 
 export const TimesheetResolver = {
   Query: {
-    timesheets: async () => {
+    timesheets: async (_: any, args: Args) => {
       try {
-        const timesheets = await Timesheet.find({});
-        if (!timesheets) throw new Error("No timesheets found");
+        if(!args.user) throw new Error(`No user ID provided`)
+        const timesheets = await Timesheet.find({ user: args.user });
+        if (!timesheets) throw new Error(`No timesheets found`);
         return {
           success: true,
           total: timesheets.length,
@@ -26,7 +27,10 @@ export const TimesheetResolver = {
     },
     timesheet: async (_: any, args: Args) => {
       try {
-        const timesheet = await Timesheet.findById(args.id);
+        const timesheet = await Timesheet.findOne({
+          _id: args.id,
+          userId: args.user,
+        });
         if (!timesheet)
           throw new Error(`Timesheet with ID ${args.id} not found.`);
         return {
@@ -103,8 +107,8 @@ export const TimesheetResolver = {
         return {
           success: true,
           message: `Timesheet for week ${findTimesheet.week} and company ${findTimesheet.company} deleted.`,
-          id: findTimesheet.id
-        }
+          id: findTimesheet.id,
+        };
       } catch (e) {
         throw e;
       }
