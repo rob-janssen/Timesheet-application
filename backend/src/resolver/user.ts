@@ -1,8 +1,7 @@
 import { User } from "../model/User";
 
-
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -60,20 +59,20 @@ export const UserResolver = {
           const userData = {
             userName: findUser.name,
             email: findUser.email,
-            role: findUser.role
-          }
-          const token = jwt.sign(userData, JWT_SECRET, {expiresIn: '11d'} )
+            role: findUser.role,
+          };
+          const token = jwt.sign(userData, JWT_SECRET, { expiresIn: "11d" });
           return {
             success: true,
-            message: 'Login success!',
-            token: token
-          }
+            message: "Login success!",
+            token: token,
+          };
         } else {
           return {
             success: false,
-            message: 'Login failed. User or password is wrong.',
-            token: ''
-          }
+            message: "Login failed. User or password is wrong.",
+            token: "",
+          };
         }
       } catch (e) {
         throw e;
@@ -121,6 +120,39 @@ export const UserResolver = {
           success: true,
           message: `User updated`,
           user: updatedUser,
+        };
+      } catch (e) {
+        throw e;
+      }
+    },
+    updateUser: async (_: any, args: Args) => {
+      try {
+        if (!args.userId) throw new Error("No ID provided!");
+        const findUser = await User.findByIdAndUpdate(args.userId, {
+          name: args.name,
+          email: args.email,
+          company: args.company,
+          role: args.role,
+        });
+        if (!findUser) throw new Error("User not found.");
+        return {
+          success: true,
+          message: `User ${findUser?.name} updated!`,
+          id: findUser?._id,
+        };
+      } catch (e) {
+        throw e;
+      }
+    },
+    deleteUser: async (_: any, args: Args) => {
+      try {
+        if (!args.userId) throw new Error("No ID provided!");
+        const findUser = await User.findByIdAndDelete(args.userId);
+        if (!findUser) throw new Error("Something went wrong while deleting.");
+        return {
+          success: true,
+          message: `User ${findUser.name} deleted from the database.`,
+          id: findUser._id,
         };
       } catch (e) {
         throw e;

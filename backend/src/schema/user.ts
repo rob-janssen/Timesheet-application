@@ -19,6 +19,8 @@ export const userGQLSchema = buildSchema(`
     type Mutation {
         addUser(name: String!, email: String!, password: String!, company: String!, customers: [String!], role: String!): createResponse
         addCustomerToUser(userId: String!, customers: [String!]): addCustomerResponse
+        updateUser(userId: String!, name: String, email: String, company: String, role: String): updateResponse
+        deleteUser(userId: String!): deleteResponse
     }
 
     type createResponse {
