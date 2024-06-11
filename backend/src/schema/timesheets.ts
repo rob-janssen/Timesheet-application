@@ -28,6 +28,8 @@ export const timesheetsGQLSchema = buildSchema(`
 
     type Mutation {
         addTimesheet(user: String!, company: String!, week: Float!, year: Float!, workingHours: [workingHoursType]): createResponse
+        updateTimesheet(id: String!): updateResponse
+        deleteTimesheet(id: String!): deleteResponse
     }
 
     type createResponse {

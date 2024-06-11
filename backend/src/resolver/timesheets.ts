@@ -32,7 +32,7 @@ export const TimesheetResolver = {
         return {
           success: true,
           timesheet,
-        }
+        };
       } catch (e) {
         throw e;
       }
@@ -76,6 +76,35 @@ export const TimesheetResolver = {
           message: `Timesheet for company ${newTimesheet.company}, week ${newTimesheet.week} is succesfully.`,
           id: newTimesheet?._id,
         };
+      } catch (e) {
+        throw e;
+      }
+    },
+    updateTimesheet: async (_: any, args: Args) => {
+      try {
+        if (!args.id) throw new Error("No ID provided.");
+        //TODO: finish the update timesheet (with re-calc of weekdays).
+        //TODO: Consideration: is updating a timesheet relevant ?
+        return {
+          success: true,
+          message: `Timesheet updated.`,
+          id: "132",
+        };
+      } catch (e) {
+        throw e;
+      }
+    },
+    deleteTimesheet: async (_: any, args: Args) => {
+      try {
+        if (!args.id) throw new Error("No ID provided. Nothing deleted.");
+        const findTimesheet = await Timesheet.findByIdAndDelete(args.id);
+        if (!findTimesheet)
+          throw new Error("Timesheet not found. Nothing deleted.");
+        return {
+          success: true,
+          message: `Timesheet for week ${findTimesheet.week} and company ${findTimesheet.company} deleted.`,
+          id: findTimesheet.id
+        }
       } catch (e) {
         throw e;
       }
