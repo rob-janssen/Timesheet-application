@@ -10,15 +10,12 @@ export interface ITimesheet extends Document {
 
 export const TimesheetSchema = new mongoose.Schema(
   {
-    //TODO: Adjust this part so that user and company are from the other mongoDB fields -- when user and company are done
+    // user: { type: String, required: true },
 
-    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false},
-    // company: { type: mongoose.Schema.Types.ObjectId, ref: 'TimesheetCompany', required: false},
-
-    user: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     company: { type: String, required: true },
-    week: { type: String, required: true }, 
-    year: { type: String, required: true }, 
+    week: { type: String, required: true },
+    year: { type: String, required: true },
     workingHours: [
       {
         day: Date,
@@ -29,7 +26,6 @@ export const TimesheetSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 
 export const Timesheet: Model<ITimesheet> = model<ITimesheet>(
   "Timesheet",

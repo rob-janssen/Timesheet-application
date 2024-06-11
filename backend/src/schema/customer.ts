@@ -14,6 +14,8 @@ export const customersGQLSchema = buildSchema(`
     
     type Mutation {
         addCustomer(customerName: String!, customerEmail: String!, customerAddress: String): createResponse
+        updateCustomer(id: String!, customerName: String, customerEmail: String, customerAddress: String): updateResponse
+        deleteCustomer(id: String!): deleteResponse
     }
 
     type Customer {
@@ -31,5 +33,16 @@ export const customersGQLSchema = buildSchema(`
         success: Boolean!
         message: String!
         id: String!
+    }
+    
+    type updateResponse {
+        success: Boolean!
+        message: String!
+        id: String!
+    }
+    
+    type deleteResponse {
+        success: Boolean!
+        message: String!
     }
 `);

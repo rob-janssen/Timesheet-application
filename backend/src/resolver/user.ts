@@ -1,5 +1,11 @@
 import { User } from "../model/User";
 
+
+const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken')
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
 interface Args {
   userId: string;
   name: string;
@@ -7,11 +13,17 @@ interface Args {
   password: string;
   company: string;
   customers: [string];
+  role: string;
+}
+
+interface LoginArgs {
+  email: string;
+  password: string;
 }
 
 export const UserResolver = {
   Query: {
-    users: async () => {
+    users: async (_: any, args: Args) => {
       try {
         const users = await User.find({});
         if (!users) throw new Error("No Users found");
@@ -36,6 +48,37 @@ export const UserResolver = {
         throw e;
       }
     },
+    loginUser: async (_: any, args: LoginArgs) => {
+      try {
+        if (!args.password || !args.email)
+          throw new Error("No password or email provided.");
+
+        const findUser = await User.findOne({ email: args.email });
+        if (findUser === null) throw new Error("User not found.");
+        const match = await bcrypt.compare(args.password, findUser?.password);
+        if (match) {
+          const userData = {
+            userName: findUser.name,
+            email: findUser.email,
+            role: findUser.role
+          }
+          const token = jwt.sign(userData, JWT_SECRET, {expiresIn: '11d'} )
+          return {
+            success: true,
+            message: 'Login success!',
+            token: token
+          }
+        } else {
+          return {
+            success: false,
+            message: 'Login failed. User or password is wrong.',
+            token: ''
+          }
+        }
+      } catch (e) {
+        throw e;
+      }
+    },
   },
   Mutation: {
     addUser: async (_: any, args: Args) => {
@@ -48,6 +91,7 @@ export const UserResolver = {
           password: args.password,
           company: args.company,
           customers: args.customers,
+          role: args.role,
         });
 
         return {

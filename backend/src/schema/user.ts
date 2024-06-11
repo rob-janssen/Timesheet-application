@@ -7,15 +7,17 @@ export const userGQLSchema = buildSchema(`
         password: String!
         company: String!
         customers: [String!]
+        role: String!
     }
 
     type Query {
         users: usersResponse!
         user(id: String!): User
+        loginUser(email: String!, password: String!): loginResponse
     }
 
     type Mutation {
-        addUser(name: String!, email: String!, password: String!, company: String!, customers: [String!]): createResponse
+        addUser(name: String!, email: String!, password: String!, company: String!, customers: [String!], role: String!): createResponse
         addCustomerToUser(userId: String!, customers: [String!]): addCustomerResponse
     }
 
@@ -23,6 +25,12 @@ export const userGQLSchema = buildSchema(`
         success: Boolean!
         message: String!
         id: String!
+    }
+
+    type loginResponse {
+        success: Boolean!
+        message: String!
+        token: String!
     }
 
     type updateResponse {
